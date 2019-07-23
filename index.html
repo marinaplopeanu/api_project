@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Eco news finder</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div>
+        <h3>Weather</h3>
+        <ul id="city-state"></ul>
+        <ul id="air-quality"></ul>
+        <ul id="weather"></ul>
+    </div>
+
+
+    <nav>
+        <ul>
+            <li class="nav-li conservation"><a href="">Conservation</a></li>
+
+            <li class="nav-li"><a href="">Recycling</a></li>
+            <li class="nav-li"><a href="">Climate change</a></li>
+            <li class="nav-li"><a href="">Ecology</a></li>
+            <li class="nav-li"><a href="">Local news</a></li>
+            <p>based on the location api add the city into the search words</p>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>News finder</h1>
+
+        <form class="js-form">
+            
+            <label for="search-term">Search term</label>
+            <input type="text" name="search-term" id="js-search-term" required>
+
+            <label for="max-results">Maximum results to return</label>
+            <input type="number" name="max-results" id="js-max-results" value="10">
+
+            <input type="submit" value="Go!">
+        </form>
+
+        <p class="js-error-message" class="error-message"></p>
+        <section id="results" class="hidden">
+            <h2>Search results</h2>
+            <ul class="results-list">
+            </ul>
+        </section>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>
