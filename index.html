@@ -7,52 +7,65 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Eco news finder</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 </head>
 
 <body>
+    <div class="header">
+        <nav class="nav" role='navigation'>
+                <div id="menuToggle">
+                    <input class="hamburger" type="checkbox" />
+                    <span></span>
+                    <span></span>
+                    <span></span> 
+                    
+                    <ul id="menu">
+                        <li class="nav-li conservation"><a href="">Conservation</a></li>
+                        <li class="nav-li"><a href="">Recycling</a></li>
+                        <li class="nav-li"><a href="">Climate change</a></li>
+                        <li class="nav-li"><a href="">Ecology</a></li>
+                        <li class="nav-li"><a href="">Local news</a></li>   
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
 
     <div>
-        <h3>Weather</h3>
-        <ul id="city-state"></ul>
-        <ul id="air-quality"></ul>
-        <ul id="weather"></ul>
-    </div>
+        <h3 class="top-header">The eco newsroom</h3>
 
+        <div class="container">
 
-    <nav>
-        <ul>
-            <li class="nav-li conservation"><a href="">Conservation</a></li>
+            <form class="js-form">
+                <input type="text" placeholder="Search" name="search-term" id="js-search-term" autocomplete="on" required>
 
-            <li class="nav-li"><a href="">Recycling</a></li>
-            <li class="nav-li"><a href="">Climate change</a></li>
-            <li class="nav-li"><a href="">Ecology</a></li>
-            <li class="nav-li"><a href="">Local news</a></li>
-            <p>based on the location api add the city into the search words</p>
-        </ul>
-    </nav>
-    <div class="container">
-        <h1>News finder</h1>
+                <button type="submit" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+        
 
-        <form class="js-form">
-            
-            <label for="search-term">Search term</label>
-            <input type="text" name="search-term" id="js-search-term" required>
+                <!-- <input type="number" name="max-results" id="js-max-results" value="100"> -->
+            </form>
+    
+           
 
-            <label for="max-results">Maximum results to return</label>
-            <input type="number" name="max-results" id="js-max-results" value="10">
-
-            <input type="submit" value="Go!">
-        </form>
+        </div>
+        <div class="weather"> 
+            <ul id="city-state"></ul>
+            <ul id="air-quality"></ul>
+            <ul id="weather"></ul>
+        </div>
 
         <p class="js-error-message" class="error-message"></p>
         <section id="results" class="hidden">
-            <h2>Search results</h2>
-            <ul class="results-list">
-            </ul>
-        </section>
+                <!-- <h2>Search results</h2> -->
+                <ul class="results-list">
+                </ul>
+         </section>
     </div>
+
+    
+
     <script src="index.js"></script>
 </body>
 

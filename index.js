@@ -1,11 +1,8 @@
 'use strict';
 
 const apiKey = 'a2abe20515614ec78c50f36ed75ae4ee';
-
 const weatherKey = '33e3423da0904e1da3f4de0f590e53e7';
-
 const searchNewsURL = 'https://newsapi.org/v2/everything';
-
 const weatherURL = `https://api.darksky.net/forecast/`
 const getLatLngURL = 'https://get.geojs.io/v1/ip/geo.json';
 
@@ -16,30 +13,21 @@ const weatherData = {
     city: "",
     state: "",
     country: "",
-    temp: "",
     pressure:"",
-    humidity: ""
+    humidity: "",
+    currentTemp:"",
+    summary:"",
+    ozone:"",
+    lowTemp:"",
+    highTemp:"",
+    visibility:"",
+    icon:"",
+    precipIntensity:"",
+    windSpeed :"",
+    uvIndex:""
+
 }
-    // let lat
-    // let lng 
-    // let city
-    // let state
-    // let country
 
-    // let temp
-    // let pressure
-    // let humidity
-    // let temp_min
-    // let temp_max
-    // let weather_description
-
-// const getAirQualityURL = `https://api.openaq.org/v1/latest?coordinates=${lat},${lng}`;
-
-// const weatherURL = `https://fcc-weather-api.glitch.me/api/current?lat=${lat}&lon=${lng}`;
-
-
-
-// `https://api.darksky.net/forecast/${weatherKey}/${lat},${lng}`
 
 
 function getLatLong() {
@@ -65,43 +53,71 @@ function displayLatLng(responseJson) {
 
     console.log(weatherData.lat, weatherData.lng, weatherData.city, weatherData.state, weatherData.country);
 
-    $('#city-state').html(
-        `<ul>
-        <li>city:${weatherData.city}</li>
-        <li>state:${weatherData.state}</li>
-        <li>latitude:${weatherData.lat}</li>
-        <li>longitude:${weatherData.lng}</li>
-    </ul>`)
+    // $('#city-state').html(
+    //     `
+    // <div class="weather-box">
+    //     <ul class="location">
+    //         <li class="city">${weatherData.city}</li>
+    //         <li class="state">${weatherData.state}</li>
+    //     </ul>
+    // </div>`)
 }
 
 function getLocalWeather(){
-
-
-    // const params = {
-    //     key: weatherKey,
-    // }
     console.log('local weather ran');
     console.log('latitude', weatherData.lat);
     console.log('longitude', weatherData.lng);
-    console.log(weatherURL);
 
     // const queryString = formatWeatherQueryParams(params)
     const url = 'https://cors-anywhere.herokuapp.com/' + weatherURL + weatherKey + '/' + weatherData.lat + ',' + weatherData.lng;
 
+    console.log(url);    
     fetch(url)
     .then(response =>{
        return response.json();
     })
-
     .then(responseJson => displayWeather(responseJson))
-
 }
 
-function displayWeather(){
+function displayWeather(responseJson){
+    weatherData.currentTemp = responseJson.currently.apparentTemperature;
+    weatherData.humidity = responseJson.currently.humidity;
+    weatherData.summary = responseJson.daily.summary;
+    weatherData.ozone = responseJson.currently.ozone;
+    weatherData.highTemp = responseJson.daily.data["0"].temperatureHigh;
+    weatherData.lowTemp = responseJson.daily.data["0"].temperatureLow;
+    weatherData.pressure = responseJson.currently.pressure;
+    weatherData.visibility = responseJson.currently.visibility;
+    weatherData.icon =  responseJson.currently.icon;
+    weatherData.precipIntensity = responseJson.currently.precipIntensity;
+    weatherData.windSpeed  = responseJson.currently.windSpeed;
+    weatherData.uvIndex = responseJson.currently.uvIndex;
+    console.log(weatherData);
 
-    //add html to display
+    $('#weather').html(
+        `
+    <div class="weather-box">
+        <ul>
+            <p>Today in ${weatherData.city}, ${weatherData.state} </p>
+            <li class=" temperature">${weatherData.currentTemp}<span> &#8457;</span></li>
+              
+                <li class="info temp">High: ${weatherData.highTemp}<span> &#8457;</span></li>
+                <li class="info temp">Low: ${weatherData.lowTemp}<span> &#8457;</span></li>
+                <li class="info extra">Humidity ${weatherData.humidity}%</li>
+                <li class="info extra">
+                ${weatherData.windSpeed} mph</li>
+                <li class="info extra">Precipitation: ${weatherData.precipIntensity}%</li>     
+                <li>${weatherData.summary}</li>
+            </div>
 
+        </ul>
+    </div>`)
 }
+
+{/* <li>pressure:${weatherData.pressure} The sea-level air pressure in millibars.</li>
+<li>uv index:${weatherData.uvIndex} The sea-level air pressure in millibars.</li>
+<li>visibility:${weatherData.visibility}</li>
+<li>ozone:${weatherData.ozone} Dobson units</li> */}
 
 function formatWeatherQueryParams(params){
     const queryItems = Object.keys(params)
@@ -110,25 +126,11 @@ function formatWeatherQueryParams(params){
 }
 
 
-
-
-
-
-
-// function getAirQuality(){
-//     console.log('getAirQuality ran');
-//     fetch(getAirQualityURL)
-//         .then(response => {
-//             return response.json();
-//         })
-        
-   
-// }
-
 function displayAirQuality(responseJson) {
     console.log(responseJson);
     $('#air-quality').html(`<ul><li>air quality index:${city}</li></ul>`)
 }
+
 
 function formatQueryParams(params) {
     const queryItems = Object.keys(params)
@@ -136,19 +138,17 @@ function formatQueryParams(params) {
     return queryItems.join('&');
 }
 
+
 function displayResults(responseJson, maxResults) {
     // if there are previous results, remove them
     console.log(responseJson);
-    $('.results-list').empty();
+    // $('.results-list').empty();
     // iterate through the articles array, stopping at the max number of results
     for (let i = 0; i < responseJson.articles.length & i < maxResults; i++) {
-        // for each video object in the articles
-        //array, add a list item to the results 
-        //list with the article title, source, author,
-        //description, and image
-        $('.results-list').append(
+
+    $('.results-list').append(
             `<li><h3><a href="${responseJson.articles[i].url}">${responseJson.articles[i].title}</a></h3>
-      <p>${responseJson.articles[i].source.name}</p>
+      <p>Source: ${responseJson.articles[i].source.name}</p>
       <p>By ${responseJson.articles[i].author}</p>
       <p>Published on ${responseJson.articles[i].publishedAt}
       <p>${responseJson.articles[i].description}</p>
@@ -160,7 +160,8 @@ function displayResults(responseJson, maxResults) {
     $('#results').removeClass('hidden');
 };
 
-function getNews(query, maxResults = 10) {
+
+function getNews(query, maxResults = 100) {
     const params = {
         q: query,
         language: "en",
@@ -191,8 +192,6 @@ function getNews(query, maxResults = 10) {
 
 
 
-
-
 function watchForm() {
     $('form').submit(event => {
         event.preventDefault();
@@ -202,35 +201,24 @@ function watchForm() {
         
     });
 
+
     
 }
 
+$('#js-search-term').val('climate change');
 $(watchForm);
 
-function navBar() {
 
-    $('.nav-li').click(event => {
-        $(event.currentTarget).find('.conservation').val();
-
-    })
-
-
-    $('form').submit(event => {
-        event.preventDefault();
-        const searchTerm = $(event.currentTarget).find('#js-search-conservation').val()
-
-        const maxResults = $('#js-max-results-conserv').val();
-        getNews(searchTerm, maxResults);
-    });
-
-}
-
-
-
-
-
-$(navBar);
-
-
-//function to run when the page loads
+//functon to run when the page loads
 getLatLong();
+
+
+$("#menu").hide();
+
+$("#menuToggle").click(function(){
+    $("#menu").show();
+  });
+  
+
+// 
+
