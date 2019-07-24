@@ -13,43 +13,33 @@
 </head>
 
 <body>
-    <div class="header">
-        <nav class="nav" role='navigation'>
-                <div id="menuToggle">
-                    <input class="hamburger" type="checkbox" />
-                    <span></span>
-                    <span></span>
-                    <span></span> 
-                    
-                    <ul id="menu">
-                        <li class="nav-li conservation"><a href="">Conservation</a></li>
-                        <li class="nav-li recycling"><a href="">Recycling</a></li>
-                        <li class="nav-li climate"><a href="">Climate change</a></li>
-                        <li class="nav-li ecology"><a href="">Ecology</a></li>
-                        <li class="nav-li local"><a href="">Local news</a></li>   
-                    </ul>
-                </div>
-            </nav>
-
+    <nav class="nav" role='navigation'>
+            <h3 class="top-header">The newsroom</h3>
+        <div id="menuToggle">
+            <input class="hamburger" type="checkbox" />
+            <span></span>
+            <span></span>
+            <span></span> 
+            
+            <ul id="menu">
+                <li class="nav-li conservation"><a href="">Conservation</a></li>
+                <li class="nav-li recycling"><a href="">Recycling</a></li>
+                <li class="nav-li climate"><a href="">Climate change</a></li>
+                <li class="nav-li ecology"><a href="">Ecology</a></li>
+                <li class="nav-li local"><a href="">Local news</a></li>   
+            </ul>
         </div>
+    </nav>
 
     <div>
-        <h3 class="top-header">The newsroom</h3>
-
         <div class="container">
-
             <form class="js-form">
                 <input type="text" placeholder="Search" name="search-term" id="js-search-term" autocomplete="on" required>
 
                 <button type="submit" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
-        
-
-                <!-- <input type="number" name="max-results" id="js-max-results" value="100"> -->
             </form>
-    
-           
-
         </div>
+
         <div class="weather"> 
             <ul id="city-state"></ul>
             <ul id="air-quality"></ul>
@@ -59,12 +49,9 @@
         <p class="js-error-message" class="error-message"></p>
         <section id="results" class="hidden">
                 <!-- <h2>Search results</h2> -->
-                <ul class="results-list box">
-                </ul>
-         </section>
+            <ul class="results-list box"></ul>
+        </section>
     </div>
-
-    
 
     <script src="index.js"></script>
 </body>
