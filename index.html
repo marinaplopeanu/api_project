@@ -13,29 +13,37 @@
 </head>
 
 <body>
-    <nav class="nav" role='navigation'>
-            <h3 class="top-header">The newsroom</h3>
-        <div id="menuToggle">
-            <input class="hamburger" type="checkbox" />
-            <span></span>
-            <span></span>
-            <span></span> 
-            
-            <ul id="menu">
-                <li class="nav-li conservation"><a href="">Conservation</a></li>
-                <li class="nav-li recycling"><a href="">Recycling</a></li>
-                <li class="nav-li climate"><a href="">Climate change</a></li>
-                <li class="nav-li ecology"><a href="">Ecology</a></li>
-                <li class="nav-li local"><a href="">Local news</a></li>   
-            </ul>
-        </div>
-    </nav>
+    <div class="top">
+        <form class="js-form-top">
+                <button type="submit" class="search-btn-top"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <input type="text" placeholder="Search.." name="search" id="js-search-term" autocomplete="on" required>
+    
+        </form>
+        <h1>The Newsroom</h1>
+        <nav class="nav" role='navigation'>
+                <h3 class="top-header">The newsroom</h3>
+            <div id="menuToggle">
+                <input class="hamburger" type="checkbox"/>
+                <span></span>
+                <span></span>
+                <span></span> 
+                    
+                <ul id="menu">                
+                    <li class="nav-li conservation"><a href="">Conservation</a></li>
+                    <li class="nav-li recycling"><a href="">Recycling</a></li>
+                    <li class="nav-li climate"><a href="">Climate change</a></li>
+                    <li class="nav-li ecology"><a href="">Ecology</a></li>
+                    <li class="nav-li local"><a href="">Local news</a></li>   
+                </ul>
+            </div>
+        </nav>
+    </div>
+    
 
     <div>
         <div class="container">
             <form class="js-form">
-                <input type="text" placeholder="Search" name="search-term" id="js-search-term" autocomplete="on" required>
-
+                <input type="text" placeholder="Search.." name="search" id="js-search-term" autocomplete="on" required>
                 <button type="submit" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
             </form>
         </div>

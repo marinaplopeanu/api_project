@@ -73,21 +73,16 @@ function getLocalWeather(){
     console.log(url);    
     fetch(url)
     .then(response =>{
-
         if (response.ok) {
             return response.json();
         }
-        throw new Error(response.statusText);
-        
+        throw new Error(response.statusText);   
     })
     .then(responseJson => displayWeather(responseJson))
     .catch(err => {
         $('.js-error-message').text(`Something went wrong: ${err.message}`);
     });
 }
-
-
-
 
 
 function displayWeather(responseJson){
@@ -125,13 +120,6 @@ function displayWeather(responseJson){
     </div>`)
 }
 
-{/* <li>pressure:${weatherData.pressure} The sea-level air pressure in millibars.</li>
-<li>uv index:${weatherData.uvIndex} The sea-level air pressure in millibars.</li>
-<li>visibility:${weatherData.visibility}</li>
-<li>ozone:${weatherData.ozone} Dobson units</li> */}
-
-
-
 
 function displayAirQuality(responseJson) {
     console.log(responseJson);
@@ -145,7 +133,27 @@ function formatQueryParams(params) {
     return queryItems.join('&');
 }
 
-function getNews(query, maxResults = 10) {
+function displayResults(responseJson, maxResults) {
+    // if there are previous results, remove them
+    console.log(responseJson);
+    $('.results-list').empty();
+    // iterate through the articles array, stopping at the max number of results
+    for (let i = 0; i < responseJson.articles.length & i < maxResults; i++) {
+
+    $('.results-list').append(
+     `<li class="box"><h3><a href="${responseJson.articles[i].url}">${responseJson.articles[i].title}</a></h3>
+        <p>Source: ${responseJson.articles[i].source.name}</p>
+        <p>By ${responseJson.articles[i].author}</p>
+        <p>Published on ${responseJson.articles[i].publishedAt}
+        <p>${responseJson.articles[i].description}</p>
+        <img src='${responseJson.articles[i].urlToImage}'>
+      </li>`)
+    };
+    //display the results section  
+    $('#results').removeClass('hidden');
+};
+
+function getNews(query, maxResults = 100) {
     const params = {
         q: query,
         language: "en",
@@ -174,39 +182,18 @@ function getNews(query, maxResults = 10) {
         });
 }
 
-function displayResults(responseJson, maxResults) {
-    // if there are previous results, remove them
-    console.log(responseJson);
-    $('.results-list').empty();
-    // iterate through the articles array, stopping at the max number of results
-    for (let i = 0; i < responseJson.articles.length & i < maxResults; i++) {
-
-    $('.results-list').html(
-     `<li><h3><a href="${responseJson.articles[i].url}">${responseJson.articles[i].title}</a></h3>
-        <p>Source: ${responseJson.articles[i].source.name}</p>
-        <p>By ${responseJson.articles[i].author}</p>
-        <p>Published on ${responseJson.articles[i].publishedAt}
-        <p>${responseJson.articles[i].description}</p>
-        <img src='${responseJson.articles[i].urlToImage}'>
-      </li>`
-        )
-    };
-    //display the results section  
-    $('#results').removeClass('hidden');
-};
-
-
 
 
 function watchForm() {
-    $('form').ready(event => {
-        // event.preventDefault();
-        const searchTerm = 'environment eco';
-        const maxResults = 10;
+    $('form').submit(event => {
+        event.preventDefault();
+        const searchTerm = $('#js-search-term').val();
+        const maxResults = $('#js-max-results').val();
+        // const searchTerm = 'environment eco';
+        // const maxResults = 10;
         getNews(searchTerm, maxResults);    
     });
 }
-
 
 $(watchForm);
 getLatLong();
@@ -216,10 +203,10 @@ $("#menu").hide();
 $("#menuToggle").click(function(){
     $("#menu").show();
   });
-  
+
 $('.conservation').click(function(){
     $('.results-list').empty();
-    const searchTerm = 'conservation preservation';
+    const searchTerm = 'weather';
     const maxResults = 10;
     getNews(searchTerm, maxResults);    
 
@@ -250,5 +237,5 @@ $('.local').click(function(){
 
 })
 
-// 
+
 
