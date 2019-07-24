@@ -143,8 +143,6 @@ function displayResults(responseJson, maxResults) {
     $('.results-list').append(
      `<li class="box"><h3><a href="${responseJson.articles[i].url}">${responseJson.articles[i].title}</a></h3>
         <p>Source: ${responseJson.articles[i].source.name}</p>
-        <p>By ${responseJson.articles[i].author}</p>
-        <p>Published on ${responseJson.articles[i].publishedAt}
         <p>${responseJson.articles[i].description}</p>
         <img src='${responseJson.articles[i].urlToImage}'>
       </li>`)
