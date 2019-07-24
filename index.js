@@ -68,16 +68,27 @@ function getLocalWeather(){
     console.log('latitude', weatherData.lat);
     console.log('longitude', weatherData.lng);
 
-    // const queryString = formatWeatherQueryParams(params)
     const url = 'https://cors-anywhere.herokuapp.com/' + weatherURL + weatherKey + '/' + weatherData.lat + ',' + weatherData.lng;
 
     console.log(url);    
     fetch(url)
     .then(response =>{
-       return response.json();
+
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error(response.statusText);
+        
     })
     .then(responseJson => displayWeather(responseJson))
+    .catch(err => {
+        $('.js-error-message').text(`Something went wrong: ${err.message}`);
+    });
 }
+
+
+
+
 
 function displayWeather(responseJson){
     weatherData.currentTemp = responseJson.currently.apparentTemperature;
@@ -119,11 +130,7 @@ function displayWeather(responseJson){
 <li>visibility:${weatherData.visibility}</li>
 <li>ozone:${weatherData.ozone} Dobson units</li> */}
 
-function formatWeatherQueryParams(params){
-    const queryItems = Object.keys(params)
-        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
-    return queryItems.join('&');
-}
+
 
 
 function displayAirQuality(responseJson) {
@@ -138,30 +145,7 @@ function formatQueryParams(params) {
     return queryItems.join('&');
 }
 
-
-function displayResults(responseJson, maxResults) {
-    // if there are previous results, remove them
-    console.log(responseJson);
-    // $('.results-list').empty();
-    // iterate through the articles array, stopping at the max number of results
-    for (let i = 0; i < responseJson.articles.length & i < maxResults; i++) {
-
-    $('.results-list').append(
-            `<li><h3><a href="${responseJson.articles[i].url}">${responseJson.articles[i].title}</a></h3>
-      <p>Source: ${responseJson.articles[i].source.name}</p>
-      <p>By ${responseJson.articles[i].author}</p>
-      <p>Published on ${responseJson.articles[i].publishedAt}
-      <p>${responseJson.articles[i].description}</p>
-      <img src='${responseJson.articles[i].urlToImage}'>
-      </li>`
-        )
-    };
-    //display the results section  
-    $('#results').removeClass('hidden');
-};
-
-
-function getNews(query, maxResults = 100) {
+function getNews(query, maxResults = 10) {
     const params = {
         q: query,
         language: "en",
@@ -190,28 +174,42 @@ function getNews(query, maxResults = 100) {
         });
 }
 
+function displayResults(responseJson, maxResults) {
+    // if there are previous results, remove them
+    console.log(responseJson);
+    $('.results-list').empty();
+    // iterate through the articles array, stopping at the max number of results
+    for (let i = 0; i < responseJson.articles.length & i < maxResults; i++) {
+
+    $('.results-list').html(
+     `<li><h3><a href="${responseJson.articles[i].url}">${responseJson.articles[i].title}</a></h3>
+        <p>Source: ${responseJson.articles[i].source.name}</p>
+        <p>By ${responseJson.articles[i].author}</p>
+        <p>Published on ${responseJson.articles[i].publishedAt}
+        <p>${responseJson.articles[i].description}</p>
+        <img src='${responseJson.articles[i].urlToImage}'>
+      </li>`
+        )
+    };
+    //display the results section  
+    $('#results').removeClass('hidden');
+};
+
+
 
 
 function watchForm() {
-    $('form').submit(event => {
-        event.preventDefault();
-        const searchTerm = $('#js-search-term').val();
-        const maxResults = $('#js-max-results').val();
-        getNews(searchTerm, maxResults);
-        
+    $('form').ready(event => {
+        // event.preventDefault();
+        const searchTerm = 'environment eco';
+        const maxResults = 10;
+        getNews(searchTerm, maxResults);    
     });
-
-
-    
 }
 
-$('#js-search-term').val('climate change');
+
 $(watchForm);
-
-
-//functon to run when the page loads
 getLatLong();
-
 
 $("#menu").hide();
 
@@ -219,6 +217,38 @@ $("#menuToggle").click(function(){
     $("#menu").show();
   });
   
+$('.conservation').click(function(){
+    $('.results-list').empty();
+    const searchTerm = 'conservation preservation';
+    const maxResults = 10;
+    getNews(searchTerm, maxResults);    
+
+})
+
+$('.recycling').click(function(){
+    $('.results-list').empty();
+    const searchTerm = 'recycling';
+    const maxResults = 10;
+    getNews(searchTerm, maxResults);    
+
+})
+
+
+$('.ecology').click(function(){
+    $('.results-list').empty();
+    const searchTerm = 'ecology ';
+    const maxResults = 10;
+    getNews(searchTerm, maxResults);    
+
+})
+
+$('.local').click(function(){
+    $('.results-list').empty();
+    const searchTerm = weatherData.city;
+    const maxResults = 10;
+    getNews(searchTerm, maxResults);    
+
+})
 
 // 
 
