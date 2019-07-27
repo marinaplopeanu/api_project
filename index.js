@@ -8,27 +8,24 @@ const getLatLngURL = 'https://get.geojs.io/v1/ip/geo.json';
 
 
 const weatherData = {
-    lat: "", 
+    lat: "",
     lng: "",
     city: "",
     state: "",
     country: "",
-    pressure:"",
+    pressure: "",
     humidity: "",
-    currentTemp:"",
-    summary:"",
-    ozone:"",
-    lowTemp:"",
-    highTemp:"",
-    visibility:"",
-    icon:"",
-    precipIntensity:"",
-    windSpeed :"",
-    uvIndex:""
+    currentTemp: "",
+    summary: "",
+    ozone: "",
+    lowTemp: "",
+    highTemp: "",
+    visibility: "",
+    precipIntensity: "",
+    windSpeed: "",
+    uvIndex: ""
 
 }
-
-
 
 function getLatLong() {
     console.log('getLatLong ran')
@@ -50,42 +47,31 @@ function displayLatLng(responseJson) {
     weatherData.city = responseJson.city;
     weatherData.state = responseJson.region;
     weatherData.country = responseJson.country;
-
     console.log(weatherData.lat, weatherData.lng, weatherData.city, weatherData.state, weatherData.country);
-
-    // $('#city-state').html(
-    //     `
-    // <div class="weather-box">
-    //     <ul class="location">
-    //         <li class="city">${weatherData.city}</li>
-    //         <li class="state">${weatherData.state}</li>
-    //     </ul>
-    // </div>`)
 }
 
-function getLocalWeather(){
+function getLocalWeather() {
     console.log('local weather ran');
     console.log('latitude', weatherData.lat);
     console.log('longitude', weatherData.lng);
 
     const url = 'https://cors-anywhere.herokuapp.com/' + weatherURL + weatherKey + '/' + weatherData.lat + ',' + weatherData.lng;
 
-    console.log(url);    
+    console.log(url);
     fetch(url)
-    .then(response =>{
-        if (response.ok) {
-            return response.json();
-        }
-        throw new Error(response.statusText);   
-    })
-    .then(responseJson => displayWeather(responseJson))
-    .catch(err => {
-        $('.js-error-message').text(`Something went wrong: ${err.message}`);
-    });
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then(responseJson => displayWeather(responseJson))
+        .catch(err => {
+            $('.js-error-message').text(`Something went wrong: ${err.message}`);
+        });
 }
 
-
-function displayWeather(responseJson){
+function displayWeather(responseJson) {
     weatherData.currentTemp = responseJson.currently.apparentTemperature;
     weatherData.humidity = responseJson.currently.humidity;
     weatherData.summary = responseJson.daily.summary;
@@ -94,9 +80,8 @@ function displayWeather(responseJson){
     weatherData.lowTemp = responseJson.daily.data["0"].temperatureLow;
     weatherData.pressure = responseJson.currently.pressure;
     weatherData.visibility = responseJson.currently.visibility;
-    weatherData.icon =  responseJson.currently.icon;
     weatherData.precipIntensity = responseJson.currently.precipIntensity;
-    weatherData.windSpeed  = responseJson.currently.windSpeed;
+    weatherData.windSpeed = responseJson.currently.windSpeed;
     weatherData.uvIndex = responseJson.currently.uvIndex;
     console.log(weatherData);
 
@@ -120,13 +105,6 @@ function displayWeather(responseJson){
     </div>`)
 }
 
-
-function displayAirQuality(responseJson) {
-    console.log(responseJson);
-    $('#air-quality').html(`<ul><li>air quality index:${city}</li></ul>`)
-}
-
-
 function formatQueryParams(params) {
     const queryItems = Object.keys(params)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
@@ -140,8 +118,8 @@ function displayResults(responseJson, maxResults) {
     // iterate through the articles array, stopping at the max number of results
     for (let i = 0; i < responseJson.articles.length & i < maxResults; i++) {
 
-    $('.results-list').append(
-     `<li class="box"><h3><a href="${responseJson.articles[i].url}">${responseJson.articles[i].title}</a></h3>
+        $('.results-list').append(
+            `<li class="box"><h3><a href="${responseJson.articles[i].url}">${responseJson.articles[i].title}</a></h3>
         <p>Source: ${responseJson.articles[i].source.name}</p>
         <p>${responseJson.articles[i].description}</p>
         <img src='${responseJson.articles[i].urlToImage}'>
@@ -152,6 +130,7 @@ function displayResults(responseJson, maxResults) {
 };
 
 function getNews(query, maxResults = 100) {
+    console.log('query', query);
     const params = {
         q: query,
         language: "en",
@@ -159,7 +138,7 @@ function getNews(query, maxResults = 100) {
     const queryString = formatQueryParams(params)
     const url = searchNewsURL + '?' + queryString;
 
-    console.log(url);
+    // console.log(url);
 
     const options = {
         headers: new Headers({
@@ -180,60 +159,39 @@ function getNews(query, maxResults = 100) {
         });
 }
 
-
-
 function watchForm() {
     $('form').submit(event => {
         event.preventDefault();
         const searchTerm = $('#js-search-term').val();
         const maxResults = $('#js-max-results').val();
-        // const searchTerm = 'environment eco';
-        // const maxResults = 10;
-        getNews(searchTerm, maxResults);    
+        getNews(searchTerm, maxResults);
     });
 }
 
-$(watchForm);
-getLatLong();
 
-$("#menu").hide();
+function navEvent() {
+    $('#menuToggle').on('click', '.nav-li', function (event) {
+        console.log('nav-li clicked')
+        const searchTerm = $(this)[0].innerText;
+        console.log('attr', searchTerm);
+        getNews(searchTerm, 10)
 
-$("#menuToggle").click(function(){
-    $("#menu").show();
-  });
+        if (searchTerm == 'Local news'){
+            const searchTerm = weatherData.city;
+            console.log('attr', searchTerm);
+            getNews(searchTerm, 10)
+        }
+    })
 
-$('.conservation').click(function(){
-    $('.results-list').empty();
-    const searchTerm = 'weather';
-    const maxResults = 10;
-    getNews(searchTerm, maxResults);    
-
-})
-
-$('.recycling').click(function(){
-    $('.results-list').empty();
-    const searchTerm = 'recycling';
-    const maxResults = 10;
-    getNews(searchTerm, maxResults);    
-
-})
+}
 
 
-$('.ecology').click(function(){
-    $('.results-list').empty();
-    const searchTerm = 'ecology ';
-    const maxResults = 10;
-    getNews(searchTerm, maxResults);    
-
-})
-
-$('.local').click(function(){
-    $('.results-list').empty();
-    const searchTerm = weatherData.city;
-    const maxResults = 10;
-    getNews(searchTerm, maxResults);    
-
-})
+function bindEventListeners() {
+    navEvent();
+    watchForm();
+    getLatLong();
+    getNews('environmental news', 10);
+}
 
 
-
+$(bindEventListeners);
