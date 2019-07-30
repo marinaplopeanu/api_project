@@ -99,10 +99,10 @@ function displayWeather(responseJson) {
             <li class=" temperature"><span>${weatherData.currentTemp}  &#8457;</span></li>
             <li class="info temp"><img src="weather/high-temp.png" alt="high temp"><span> ${weatherData.highTemp}  &#8457;</span></li>
             <li class="info temp"><img src="weather/low-temp.png" alt="low temp"><span> ${weatherData.lowTemp} &#8457;</span></li>
-            <li class="info extra"><img src="weather/humidity.png" alt="humidity" class="humidity"><span> ${weatherData.humidity} % </span></li>
             <li class="info extra"><img src="weather/wind.png" alt="Wind"><span>
             ${weatherData.windSpeed} mph </span></li>
             <li class="info extra"><img src="weather/rain.png" alt="Precipitation"><span> ${weatherData.precipIntensity} %</span></li>  
+            <li class="info extra"><img src="weather/humidity.png" alt="humidity" class="humidity"><span> ${weatherData.humidity} % </span></li>
         </ul>`)
     
 
@@ -197,7 +197,7 @@ function navEvent() {
         getNews(searchTerm, 10)
 
         if (searchTerm == 'Local news'){
-            const searchTerm = 'pollution ' + weatherData.city;
+            const searchTerm = weatherData.city + " " +' ecology';
             console.log('attr', searchTerm);
             getNews(searchTerm, 10)
         }
