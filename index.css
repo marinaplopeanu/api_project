@@ -3,6 +3,8 @@
   font-family: "Avenir Next", "Avenir", sans-serif;
 }
 
+
+
 button,
 input[type="text"] {
   padding: 5px;
@@ -322,7 +324,7 @@ ul li {
 
 #js-search-term {
   border-radius: 10px;
-  width: 88%;
+  width: 86%;
   margin-right: 5px;
   background: #ededed;
   border: 1px solid #232323;
@@ -331,6 +333,12 @@ ul li {
   padding-left: 20px;
   margin-bottom: 10px;
 }
+
+
+.container{
+  width: 100%;
+}
+
 
 .search-btn {
   border-radius: 10px;
