@@ -13,46 +13,54 @@
 </head>
 
 <body>
-    <div class="top">
-        <form class="js-form-top">
-            <button type="submit" class="search-btn-top"><i class="fa fa-search" aria-hidden="true"></i></button>
-            <input type="text" placeholder="Search.." name="search" id="js-search-term" autocomplete="on" required>
+    <main>
+        <header class="header top" role="banner">
+            <form class="js-form-top" role="form">
+                <button type="submit" class="search-btn-top"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <input type="text" placeholder="Search.." name="search" id="js-search-term-top" autocomplete="on" required> 
+            </form>
 
-        </form>
-        <h1>The Newsroom</h1>
-        <nav class="nav" role='navigation'>
-            <h3 class="top-header"></h3>
-            <ul id="menuToggle">
-                <li class="nav-li conservation">Conservation</li>
-                <li class="nav-li recycling">Recycling</li>
-                <li class="nav-li climate">Climate change</li>
-                <li class="nav-li ecology">Ecology</li>
-                <li class="nav-li local">Local news</li>
-            </ul>
-        </nav>
-    </div>
+            <nav>
+                
+                <input class="menu-btn" type="checkbox" id="menu-btn" />
+                <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+                <h3 class="top-header">The Newsroom</h3>
+                <ul class="menu">
+    
+                    <li class="nav-li sustainability">Sustainability</li>
+                    <li class="nav-li recycling">Recycling</li>
+                    <li class="nav-li climate">Climate Change</li>
+                    <li class="nav-li pollution">Pollution</li>
+                    <li class="nav-li local">Local news</li>
+                </ul>
+            </nav>
+
+        </header>
 
 
-    <div>
-        <div class="container">
-            <form class="js-form">
-                <input type="text" placeholder="Search.." name="search" id="js-search-term" autocomplete="on" required>
+
+        <section class="container" role="region">
+            <form class="js-form" role="form">
+                <input type="text" placeholder="Search.." name="search" id="js-search-term" autocomplete="on" required role="search">
                 <button type="submit" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
             </form>
-        </div>
-
-        <div class="weather">
+        </section>
+        
+        <section class="weather">
             <ul id="city-state"></ul>
-            <ul id="air-quality"></ul>
             <ul id="weather"></ul>
-        </div>
-
+        </section>
+        
         <p class="js-error-message" class="error-message"></p>
         <section id="results" class="hidden">
             <!-- <h2>Search results</h2> -->
             <ul class="results-list"></ul>
         </section>
-    </div>
+
+    </main>
+
+
+
 
     <script src="index.js"></script>
 </body>

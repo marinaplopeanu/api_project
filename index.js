@@ -18,6 +18,7 @@ const weatherData = {
     currentTemp: "",
     summary: "",
     ozone: "",
+    icon: "",
     lowTemp: "",
     highTemp: "",
     visibility: "",
@@ -26,6 +27,10 @@ const weatherData = {
     uvIndex: ""
 
 }
+
+// nav bar
+
+
 
 function getLatLong() {
     console.log('getLatLong ran')
@@ -74,35 +79,33 @@ function getLocalWeather() {
 function displayWeather(responseJson) {
     weatherData.currentTemp = responseJson.currently.apparentTemperature;
     weatherData.humidity = responseJson.currently.humidity;
-    weatherData.summary = responseJson.daily.summary;
+    weatherData.summary = responseJson.currently.summary;
     weatherData.ozone = responseJson.currently.ozone;
     weatherData.highTemp = responseJson.daily.data["0"].temperatureHigh;
     weatherData.lowTemp = responseJson.daily.data["0"].temperatureLow;
     weatherData.pressure = responseJson.currently.pressure;
+    weatherData.icon = responseJson.currently.icon;
     weatherData.visibility = responseJson.currently.visibility;
     weatherData.precipIntensity = responseJson.currently.precipIntensity;
     weatherData.windSpeed = responseJson.currently.windSpeed;
     weatherData.uvIndex = responseJson.currently.uvIndex;
     console.log(weatherData);
 
-    $('#weather').html(
-        `
-    <div class="weather-box">
-        <ul>
-            <p>Today in ${weatherData.city}, ${weatherData.state} </p>
-            <li class=" temperature">${weatherData.currentTemp}<span> &#8457;</span></li>
-              
-                <li class="info temp">High: ${weatherData.highTemp}<span> &#8457;</span></li>
-                <li class="info temp">Low: ${weatherData.lowTemp}<span> &#8457;</span></li>
-                <li class="info extra">Humidity ${weatherData.humidity}%</li>
-                <li class="info extra">
-                ${weatherData.windSpeed} mph</li>
-                <li class="info extra">Precipitation: ${weatherData.precipIntensity}%</li>     
-                <li>${weatherData.summary}</li>
-            </div>
+       $('#weather').html(
+        `<ul class="weather-box">
+          <li class="city">Today in ${weatherData.city}, ${weatherData.state}: <span>${weatherData.summary}</span> </li>
+            <li ><img src="weather/${weatherData.icon}.png" alt="weather icon" class="main-img"></li>
+            <li class="summary"></li>
+            <li class=" temperature"><span>${weatherData.currentTemp}  &#8457;</span></li>
+            <li class="info temp"><img src="weather/high-temp.png" alt="high temp"><span> ${weatherData.highTemp}  &#8457;</span></li>
+            <li class="info temp"><img src="weather/low-temp.png" alt="low temp"><span> ${weatherData.lowTemp} &#8457;</span></li>
+            <li class="info extra"><img src="weather/humidity.png" alt="humidity" class="humidity"><span> ${weatherData.humidity} % </span></li>
+            <li class="info extra"><img src="weather/wind.png" alt="Wind"><span>
+            ${weatherData.windSpeed} mph </span></li>
+            <li class="info extra"><img src="weather/rain.png" alt="Precipitation"><span> ${weatherData.precipIntensity} %</span></li>  
+        </ul>`)
+    
 
-        </ul>
-    </div>`)
 }
 
 function formatQueryParams(params) {
@@ -119,11 +122,19 @@ function displayResults(responseJson, maxResults) {
     for (let i = 0; i < responseJson.articles.length & i < maxResults; i++) {
 
         $('.results-list').append(
-            `<li class="box"><h3><a href="${responseJson.articles[i].url}">${responseJson.articles[i].title}</a></h3>
-        <p>Source: ${responseJson.articles[i].source.name}</p>
-        <p>${responseJson.articles[i].description}</p>
-        <img src='${responseJson.articles[i].urlToImage}'>
-      </li>`)
+
+            `   <div class="box">
+                    <h3><a href="${responseJson.articles[i].url} target="_blank"">${responseJson.articles[i].title}</a></h3>
+                    <div class="content">
+                        <p>Source: ${responseJson.articles[i].source.name}</p>
+                        <p>${responseJson.articles[i].description}</p>
+                    </div>
+
+                    <div class="image">
+                        <img src='${responseJson.articles[i].urlToImage}' class="rounded-corners">
+                    </div>
+                    
+                </div> `)
     };
     //display the results section  
     $('#results').removeClass('hidden');
@@ -162,22 +173,31 @@ function getNews(query, maxResults = 100) {
 function watchForm() {
     $('form').submit(event => {
         event.preventDefault();
-        const searchTerm = $('#js-search-term').val();
+        const searchTerm = $('#js-search-term').val() + 'environment';
         const maxResults = $('#js-max-results').val();
         getNews(searchTerm, maxResults);
     });
 }
 
 
+function watchForm2() {
+    $('form').submit(event => {
+        event.preventDefault();
+        const searchTerm = $('#js-search-term-top').val() + 'environment';;
+        const maxResults = $('#js-max-results').val();
+        getNews(searchTerm, maxResults);
+    });
+}
+
 function navEvent() {
-    $('#menuToggle').on('click', '.nav-li', function (event) {
+    $('.menu').on('click', '.nav-li', function (event) {
         console.log('nav-li clicked')
         const searchTerm = $(this)[0].innerText;
         console.log('attr', searchTerm);
         getNews(searchTerm, 10)
 
         if (searchTerm == 'Local news'){
-            const searchTerm = weatherData.city;
+            const searchTerm = 'pollution ' + weatherData.city;
             console.log('attr', searchTerm);
             getNews(searchTerm, 10)
         }
@@ -185,12 +205,25 @@ function navEvent() {
 
 }
 
+$(document).ready(function () {
+    $('.nav-li').click(function (e) {
+
+        $('.nav-li').removeClass('active');
+
+        var $this = $(this);
+        if (!$this.hasClass('active')) {
+            $this.addClass('active');
+        }
+    });
+});
+
 
 function bindEventListeners() {
     navEvent();
     watchForm();
+    watchForm2();
     getLatLong();
-    getNews('environmental news', 10);
+    getNews('environmental pollution', 10);
 }
 
 
