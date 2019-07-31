@@ -519,6 +519,8 @@ header{
 
   .js-form-top {
     display: block;
+    padding-top:20px;
+    padding-left:10px;
   }
 
   .search-btn-top {
