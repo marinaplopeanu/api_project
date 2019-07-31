@@ -129,7 +129,6 @@ function displayResults(responseJson, maxResults) {
                         <p>Source: ${responseJson.articles[i].source.name}</p>
                         <p>${responseJson.articles[i].description}</p>
                     </div>
-
                     <div class="image">
                         <img src='${responseJson.articles[i].urlToImage}' class="rounded-corners">
                     </div>

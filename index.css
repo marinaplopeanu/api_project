@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  font-family: "Avenir Next", "Avenir", sans-serif;
+  font-family: 'Karla', sans-serif;
 }
 
 
@@ -112,7 +112,7 @@ li {
 
 
 .error-message {
-  color: red;
+  color: tomato;
 }
 
 .hidden {
@@ -130,8 +130,8 @@ body {
   height: 100%;
   min-height: 100%;
   background: #3e3e3f;
-  color: #cdcdcd;
-  font-family: "Avenir Next", "Avenir", sans-serif;
+  color: #ededed;
+  font-family: 'Karla', sans-serif;
   overflow-x: hidden;
   /* needed because hiding the menu on the right side is not perfect,  */
 }
@@ -149,6 +149,9 @@ ul li {
   color: tomato;
 }
 
+.js-form{
+  margin-top: 10px;
+}
 
 .js-form-top {
   display: none;
@@ -170,9 +173,18 @@ ul li {
   padding: 10px;
 }
 
+.line{
+  text-align:center;
+  color: #CDCDCD;
+  text-shadow: 4px 4px #333333;
+  padding:5px;
+}
 
 .top-header {
-  background-color: rgba(0, 0, 0, 0.03);
+  /* background-color: rgba(0, 0, 0, 0.03); */
+  text-shadow: 4px 4px #333333;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size:30px;
   height: 40px;
   padding-top: 10px;
   margin-left: 10px;
@@ -182,6 +194,14 @@ ul li {
   border-radius: 10px;
 }
 
+header{
+  border: 1px solid rgba(0, 0, 0, 0.063);
+  background-color: rgba(0, 0, 0, 0.063);
+      box-shadow: 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-left:10px;
+    margin-right:10px;
+}
 
 .header ul {
   margin: 0;
@@ -194,17 +214,19 @@ ul li {
 }
 
 .header li {
-  display: block;
+  display: block;  
   color: #3e3e3f;
+  text-shadow: 4px 4px #333333;
   background-color: #ededed;
-  font-family: "Avenir Next", "Avenir", sans-serif;
+  font-family: 'Karla', sans-serif;
   font-size: 20px;
+  margin-bottom: 20px;
 }
 
 
 .header li a:hover,
 .header .menu-btn:hover {
-  background-color: #f4f4f4;
+  background-color: #ededed;
 }
 
 .header .logo {
@@ -224,7 +246,7 @@ ul li {
 }
 
 .menu {
-  background-color: #3e3e3f;
+  /* background-color: #3e3e3f; */
   width: 40%;
   float: right;
 }
@@ -302,10 +324,10 @@ ul li {
 
 
 
-.city-state {
+/* .city-state {
   display: flex;
   flex-direction: row;
-}
+} */
 
 
 
@@ -370,11 +392,51 @@ ul li {
 
 @media screen and (min-width: 720px) {
 
+
+  .header ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  background-color: #3e3e3f;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+.header li {
+  display: block;
+  color: #ededed;
+  background-color: #3e3e3f;
+  font-family: 'Karla', sans-serif;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+
+.header li a:hover,
+.header .menu-btn:hover {
+  background-color: #f4f4f4;
+}
+
+.header .logo {
+  display: block;
+  float: left;
+  font-size: 2em;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+
+
+.results-list{
+  margin-top:20px;
+
+}
   .weather-box {
     display: flex;
     flex-direction: column;
     vertical-align: center;
-    padding: 5px;
+    margin-top:10px;
+    /* padding: 5px; */
   }
 
   .info {
@@ -395,6 +457,10 @@ ul li {
     justify-content: center;
   }
 
+   /* .temperature{
+     margin-left:0;
+   } */
+
   img.rounded-corners {
 
     border-radius: 20px;
@@ -407,7 +473,8 @@ ul li {
     display: inline-flex;
     align-items: center;
     font-family: "Avenir Next", "Avenir", sans-serif;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight:bold;
   }
 
   .header .menu-icon {
@@ -415,7 +482,8 @@ ul li {
   }
 
   .header .menu {
-
+    /* padding-top:10px; */
+    margin-top:15px;
     max-height: 40px;
     text-align: center;
   }
@@ -457,7 +525,7 @@ ul li {
     border-radius: 20px;
     background: none;
     border: none;
-    color: white;
+    color: #ededed;
     font-size: 22px;
     padding-left: 10px;
   }
@@ -465,7 +533,7 @@ ul li {
   #js-search-term-top {
     width: 100px;
     height: 30px;
-    padding: 5px;
+    padding: 10px;
     box-sizing: border-box;
     border: 1px solid #232323;
     border-radius: 10px;
