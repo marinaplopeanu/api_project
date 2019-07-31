@@ -1,5 +1,7 @@
 # api_project
 
+See the app here: https://marinaplopeanu.github.io/econewsapp/
+
 This is a news app that grabs the news from https://newsapi.org/v2/everything api
 
 The app focuses manly on environmental news. Each navbar element has an embeded search word.
