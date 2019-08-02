@@ -216,7 +216,7 @@ header{
 .header li {
   display: block;  
   color: #3e3e3f;
-  text-shadow: 4px 4px #333333;
+  /* text-shadow: 4px 4px #333333; */
   background-color: #ededed;
   font-family: 'Karla', sans-serif;
   font-size: 20px;
